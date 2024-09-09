@@ -11,11 +11,11 @@ name :{
 price :{
 
     type :String,
-    required :true
+
 },
 taste:{
     type:String,
-    required :true,
+    
     enum : ['spicey' , 'normal' , 'mirchi']
 },
 is_drink:{
@@ -27,7 +27,7 @@ ingredients :{
 
     type:String,
     enum :['chicken wings' ,'spices', 'haldi','mirchi']  ,
-    required :true
+    
 },
 num_sales:{
 
