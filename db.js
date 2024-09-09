@@ -1,9 +1,12 @@
 // database server 
 
 const mongoose = require('mongoose');
-
-const mongoURL = 'mongodb://127.0.0.1:27017/inco'; // Updated connection string
+require('dotenv').config(); // senstive passwords 
+// const mongoURL = 'mongodb://127.0.0.1:27017/inco'; // Updated connection string
+const mongoURL=process.env.db_URL;
 mongoose.connect(mongoURL);
+
+
 
 const db = mongoose.connection;
 

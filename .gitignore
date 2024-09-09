@@ -1,4 +1,5 @@
 node_modules/
-file.css/
-file.html/
-index.js/
+file.css
+file.html
+index.js
+.env

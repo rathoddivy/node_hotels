@@ -3,9 +3,9 @@
 const express= require('express');
 const app=express();  // use app variable for use "express"
 const db=require('./db')
+require('dotenv').config(); // senstive passwords 
 
-
-
+const port=process.env.port||3000;  // this connect with .env file
 
 // scema is here in  person
 const person=require('./models/person')  //person scema 
