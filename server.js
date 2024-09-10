@@ -12,7 +12,7 @@ const person=require('./models/person')  //person scema
 
 const bodypaser =require('body-parser');  // all body parser data saved in   ----(req.body)
 app.use(bodypaser.json());
-
+const PORT = process.env.port||3000   // / this connect with .env file /
 
 // think data coming from /person link
 
@@ -96,17 +96,10 @@ swite:'icecream , pan'
     }
  res.send(menu)
 })
-app.use((req, res, next) => {
-  if (req.header('x-forwarded-proto') !== 'https') {
-    res.redirect(`https://${req.header('host')}${req.url}`);
-  } else {
-    next();
-  }
-});
 
 
 
-const PORT = process.env.port;   // / this connect with .env file /
+ 
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
