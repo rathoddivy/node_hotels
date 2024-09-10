@@ -1,6 +1,10 @@
 const express=require('express')
 const router=express.Router();
 
+const bodypaser =require('body-parser');  // all body parser data saved in   ----(req.body)
+router.use(bodypaser.json());
+
+
 const person=require('./models/person')  //person scema 
 
 router.get('/:worktype', async (req,res)=>{

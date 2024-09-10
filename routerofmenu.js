@@ -4,6 +4,8 @@ const router=express.Router();
 
 const menu= require('./models/menu')
 
+const bodypaser =require('body-parser');  // all body parser data saved in   ----(req.body)
+router.use(bodypaser.json());
 
 
 
