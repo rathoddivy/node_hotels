@@ -5,7 +5,6 @@ const app=express();  // use app variable for use "express"
 const db=require('./db')
 require('dotenv').config(); // senstive passwords 
 
-const port=process.env.port||3000;  // this connect with .env file
 
 // scema is here in  person
 const person=require('./models/person')  //person scema 
@@ -84,17 +83,6 @@ app.use('/person', router);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 // some apis for practices ❤
 app.get('/express' , function(req , res){
 
@@ -111,6 +99,8 @@ swite:'icecream , pan'
 
 
 
-app.listen(port, ()=>{
-    console.log('listening on port 3000')
-})
+const PORT = process.env.port || 3000;   // / this connect with .env file /
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
