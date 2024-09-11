@@ -8,7 +8,13 @@ const mongoURL  = process.env.db_URL;
 
 
 // const mongoURL= process.env.db_URL_local;
-mongoose.connect(mongoURL);
+mongoose.connect(mongoURL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    ssl: true,
+    tlsInsecure: false,  // Only set to true if using self-signed certificates (Atlas uses signed certs)
+});
+
   
 
 
