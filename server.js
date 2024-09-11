@@ -12,10 +12,16 @@ const person=require('./models/person')  //person scema
 
 const bodypaser =require('body-parser');  // all body parser data saved in   ----(req.body)
 app.use(bodypaser.json());
-const PORT = process.env.port||3000   // / this connect with .env file /
+const PORT = process.env.port||3000;   // / this connect with .env file /
+
+
+const long= (req, res , next) =>{
+console.log(`${new Date().toLocaleString()} request made to :${req.originalUrl}`);
+next();
+}
 
 // think data coming from /person link
-
+app.use(long);
 app.post('/person' , async (req , res)   =>{
 
 
