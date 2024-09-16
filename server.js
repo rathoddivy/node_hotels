@@ -1,112 +1,33 @@
-// backend server 
-
-const express= require('express');
-const app=express();  // use app variable for use "express"
-const db=require('./db')
-require('dotenv').config(); // senstive passwords 
-
-
-// scema is here in  person
-const person=require('./models/person')  //person scema 
-
-
-const bodypaser =require('body-parser');  // all body parser data saved in   ----(req.body)
-app.use(bodypaser.json());
-const PORT = process.env.port||3000;   // / this connect with .env file /
-
-
-const long= (req, res , next) =>{
-console.log(`${new Date().toLocaleString()} request made to :${req.originalUrl}`);
-next();
-}
-
-// think data coming from /person link
-app.use(long);
-app.post('/person' , async (req , res)   =>{
+// backend server
+const express = require('express');
+const app = express();
+const db = require('./db');
+require('dotenv').config();
+const { passport, authenticated } = require('./auth'); // Import from auth.js
+const menu = require('./Scemas/menu');
+const person = require('./Scemas/person');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+app.use(cors({
+    origin: 'http://127.0.0.1:5500',  // Frontend URL
+    credentials: true  // Enable if needed for cookies, sessions, etc.
+}));
 
 
 
-try{
-    const data= req.body  //data transfer into data variable 
+// Middleware
+app.use(bodyParser.json());
 
-    const newperson=new person(data);  // scema tranfer into newperson
-    
-    // newperson.name = data.name 
-    // newperson.age =  data.age
-    // newperson.email = data.email                --- aavu na karvu pade tena mate data ne new person ma pass kari didhu
-    // newperson.work = data.work
-    // newperson.mobile = data.mobile
-    // newperson.salary = data.salary
-    // newperson.adress = data.adress
-    
-    const response = await newperson.save();  // wait karo jub tuk data nai aata if send errore so , go directly in catch function .
-    console.log('data is saved ');
-    res.status(200).json(response)
+// Fix router section
+const router = require('./routerofperson');
+const router2 = require('./routerofmenu');
+app.use('/menu',router2);
+app.use('/person',authenticated, router);
 
-
-}catch(err){  // catch errore
-
-
-    console.log(err);
-res.status(500).json({error :'internal server error'});
-}
-   
-
-
-
-})
-
-
-app.get('/person' , async (req, res)=>{
-
-  try{
-
-    const data= await person.find()
-    res.json(data)
-    console.log("data fetch succesfully")
-
-  }catch{
-res.json(err)
-
-
-  }
-})
-
-
-// fix router 
-
-const router= require('./routerofperson');  
-const router2 = require('./routerofmenu');// router file 
-
-app.use('/menu', router2);  // the live server express can use also / for get, post etc..........
-  
-
-app.use('/person', router);
-
-
-
-// hello my  self divyaraj (this msg only for testing)
-
-
-
-// some apis for practices ❤
-app.get('/express' , function(req , res){
-
-    res.send("wellcome you are in server 😁")
-})
-app.get('/menu' , (req , res)=>{ 
-var menu  =  {
-drinks:'soup ,water ,tomato soup',
-dinner :'tandoori , panerr tikka , paneerr chilli',
-swite:'icecream , pan'
-    }
- res.send(menu)
-})
-
-
-
- 
-
+// Server
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });
+
+

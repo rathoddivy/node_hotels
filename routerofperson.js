@@ -1,11 +1,43 @@
 const express=require('express')
 const router=express.Router();
-
+const { passport, authenticated } = require('./auth'); // Import from auth.js
 const bodypaser =require('body-parser');  // all body parser data saved in   ----(req.body)
 router.use(bodypaser.json());
 
 
-const person=require('./models/person')  //person scema 
+const person=require('./Scemas/person')  //person scema 
+router.get('/',authenticated,async (req, res) => {
+  try {
+      const data = await person.find();
+      res.json(data);
+      console.log('Data fetched successfully');
+  } catch (err) {
+      res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+
+
+
+  router.post('/', async (req, res) => {
+    try {
+      const dataofperson = req.body;
+      const persondata = new person(dataofperson);
+      const response = await persondata.save();
+      console.log('Your person is saved');
+      res.json(response);
+    } catch (err) {
+      console.error(err); // Log the actual error for debugging
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  })
+
+
+
+
+
+
 
 router.get('/:worktype', async (req,res)=>{
 try{

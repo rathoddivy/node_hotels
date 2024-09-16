@@ -1,0 +1,49 @@
+<!-- get method -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Person Data</title>
+</head>
+<body>
+    <h1>Person Data</h1>
+    <button id="fetchDataBtn">Fetch Person Data</button>
+    <pre id="responseData"></pre>
+
+    <script>
+        document.getElementById('fetchDataBtn').addEventListener('click', async () => {
+            try {
+                // Fetch the data from the backend
+                const response = await fetch('http://localhost:3000/person', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Basic ' + btoa('yash@123:yash'),  // Replace with correct username:password
+                    }
+                });
+
+                // Check if the response is OK (status code 200)
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                // Convert the response to JSON
+                const data = await response.json();
+
+                // Display the fetched data in the <pre> element
+                document.getElementById('responseData').innerText = JSON.stringify(data, null, 2);
+
+            } catch (err) {
+                // Display any errors
+                console.error('Error fetching data:', err);
+                document.getElementById('responseData').innerText = 'Error fetching data: ' + err.message;
+            }
+        });
+
+</script> 
+<script src="app.js"></script>
+</body>
+
+
+</html>

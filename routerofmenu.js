@@ -1,15 +1,23 @@
 const express=require('express')
 const router=express.Router();
+const { passport, authenticated } = require('./auth'); // Import from auth.js
 
-
-const menu= require('./models/menu')
+const menu= require('./Scemas/menu')
 
 const bodypaser =require('body-parser');  // all body parser data saved in   ----(req.body)
 router.use(bodypaser.json());
 
+router.get('/', async (req, res) => {
+    try {
+        const get = await menu.find();
+        res.json(get);
+        console.log('Your data is fetched from the database');
+    } catch (err) {
+        res.status(500).json({ error: 'Internal error' });
+    }
+});
 
-
-router.post('/' , async ( req,res) =>{
+router.post('/' ,authenticated, async ( req,res) =>{
 
     try{
         const menudata= req.body 
@@ -26,7 +34,7 @@ router.post('/' , async ( req,res) =>{
     } )
     
     
-    router.get('/', async (req, res)=>{
+    router.get('/',authenticated, async (req, res)=>{
     try{
     
     const get=await menu.find()
@@ -46,7 +54,7 @@ router.post('/' , async ( req,res) =>{
 
 
 
-    router.get('/:Taste' , async (req , res)=>{
+    router.get('/:Taste' , authenticated,async (req , res)=>{
         try{
         
             const taste = req.params.Taste;

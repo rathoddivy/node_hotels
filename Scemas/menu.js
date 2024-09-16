@@ -33,6 +33,16 @@ num_sales:{
 
     type:Number,
     default:0,
+},
+username:{
+
+    type:String,
+    requried:true
+},
+password:{
+    type:String,
+    requried:true
+
 }
 
 
