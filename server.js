@@ -18,6 +18,7 @@ app.use(cors({
 // Middleware
 app.use(bodyParser.json());
 
+
 // Fix router section
 const router = require('./routerofperson');
 const router2 = require('./routerofmenu');
