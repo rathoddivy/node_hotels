@@ -6,7 +6,7 @@ router.use(bodypaser.json());
 
 
 const person=require('./Scemas/person')  //person scema 
-router.get('/',authenticated,async (req, res) => {
+router.get('/',async (req, res) => {
   try {
       const data = await person.find();
       res.json(data);

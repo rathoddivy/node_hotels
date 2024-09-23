@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 const router = require('./routerofperson');
 const router2 = require('./routerofmenu');
 app.use('/menu',router2);
-app.use('/person',authenticated, router);
+app.use('/person', router);
 
 // Server
 const PORT = process.env.PORT || 3000;
